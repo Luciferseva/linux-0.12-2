@@ -18,7 +18,7 @@ _echo_succ(){
 
 env_install(){
 
-    sudo apt-get install -y make bin86 gcc-multilib &> /dev/null \
+    sudo apt-get install -y make bin86 gcc-multilib \
     && _echo_succ "bin86 is installed." || _echo_err "bin86 is not installed!!!"
 
     if [ ! -z `which gcc-3.4` ];then
@@ -44,8 +44,8 @@ env_install(){
                 _echo_info "Download ${deb} Sucessfully." || ( rm ${deb} & _echo_err "Download ${deb} unsuccessfully!!!" )
             fi
         done
-        sudo dpkg -i ${GCC_DIR}/*.deb &> /dev/null
-        sudo apt-get install -y -f &> /dev/null
+        sudo dpkg -i ${GCC_DIR}/*.deb 
+        sudo apt-get install -y -f 
         if [ ! -z `which gcc-3.4` ];then
             _echo_succ "gcc-3.4 is installed."
         fi
@@ -58,10 +58,10 @@ bochs_install(){
     sudo apt-get install -y build-essential libgtk2.0-dev \
         libx11-dev xserver-xorg-dev xorg-dev g++ \
         pkg-config libxcursor-dev libxrandr-dev \
-        libxinerama-dev libxi-dev &> /dev/null
+        libxinerama-dev libxi-dev 
 
-    sudo apt-get install -y build-essential &> /dev/null
-    sudo apt-get install -y bochs bochs-x bochs-sdl &> /dev/null
+    sudo apt-get install -y build-essential 
+    sudo apt-get install -y bochs bochs-x bochs-sdl
     
     if [ ! -e "bochs-2.6.9.tar.gz" ]; then
         wget https://downloads.sourceforge.net/project/bochs/bochs/2.6.9/bochs-2.6.9.tar.gz -q --show-progress  && \
@@ -69,7 +69,7 @@ bochs_install(){
     fi
 
     if [ ! -d "bochs-2.6.9" ];then
-        tar zxvf bochs-2.6.9.tar.gz &> /dev/null && \
+        tar zxvf bochs-2.6.9.tar.gz && \
         _echo_info "tar bochs-2.6.9.tar.gz Sucessfullyhttp://mirrors.ustc.edu.cn/ubuntu-old-releases/." || \
         (rm -rf ../bochs-2.6.9 & _echo_err "tar bochs-2.6.9.tar.gz unsuccessfully!!!" )
     fi
@@ -82,7 +82,7 @@ bochs_install(){
         # ./configure --enable-debugger --enable-disasm
         make  && (cp bochs ../bochs-gdb & _echo_succ "make bochs sucessfully.") || _echo_err "make bochs unsucessfully.!!!"
         else
-        ./configure --enable-gdb-stub --enable-disasm &> /dev/null
+        ./configure --enable-gdb-stub --enable-disasm 
         make &> /dev/null && (cp bochs ../bochs-gdb & _echo_succ "make bochs sucessfully.") || _echo_err "make bochs unsucessfully.!!!"
         fi
     fi
